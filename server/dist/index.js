@@ -13,6 +13,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 const port = process.env.PORT;
+app.use("/api/player", player_routes_1.playerRouter);
 if (process.env.NODE_ENV === "production") {
     // set static folder
     app.use(express_1.default.static("client/build"));
@@ -20,5 +21,4 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path_1.default.resolve(__dirname, "client", "build", "index.html"));
     });
 }
-app.use("/api/player", player_routes_1.playerRouter);
 app.listen(port, () => { });

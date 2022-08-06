@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 const port = process.env.PORT;
 
+app.use("/api/player", playerRouter);
+
 if (process.env.NODE_ENV === "production") {
   // set static folder
   app.use(express.static("client/build"));
@@ -18,7 +20,5 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
-app.use("/api/player", playerRouter);
 
 app.listen(port, () => {});
