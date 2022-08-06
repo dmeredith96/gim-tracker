@@ -10,10 +10,6 @@ app.use(cors());
 app.use(express.json());
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
-
 app.use("/api/player", playerRouter);
 
 app.listen(port, () => {});

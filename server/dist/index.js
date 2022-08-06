@@ -12,8 +12,5 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 const port = process.env.PORT;
-app.get("/", (req, res) => {
-    res.send("Express + TypeScript Server");
-});
 app.use("/api/player", player_routes_1.playerRouter);
 app.listen(port, () => { });
