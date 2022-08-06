@@ -6,6 +6,9 @@ import { doesPlayerHaveMilestoneUnlocked } from "../util/milestones";
 import { Milestone } from "./../types/interfaces";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
+import { MilestoneUnlockType } from "../types/enums";
+
 interface MilestoneProps {
   milestone: Milestone;
   players: Player[];
@@ -53,12 +56,7 @@ export const MilestoneComponent: React.FC<MilestoneProps> = (
           {props.players.map((player) => {
             return (
               <Box>
-                {player.username}{" "}
-                {doesPlayerHaveMilestoneUnlocked(props.milestone, player) ? (
-                  <CheckCircleIcon fontSize="small" color="success" />
-                ) : (
-                  <CancelIcon fontSize="small" color="error" />
-                )}
+                {player.username} {getMilestoneIcon(props.milestone, player)}
               </Box>
             );
           })}
@@ -67,3 +65,16 @@ export const MilestoneComponent: React.FC<MilestoneProps> = (
     </Box>
   );
 };
+
+function getMilestoneIcon(milestone: Milestone, player: Player) {
+  switch (doesPlayerHaveMilestoneUnlocked(milestone, player)) {
+    case MilestoneUnlockType.NO:
+      return <CancelIcon fontSize="small" color="error" />;
+    case MilestoneUnlockType.YES:
+      return <CheckCircleIcon fontSize="small" color="success" />;
+    case MilestoneUnlockType.WITH_BOOST:
+      return <ArrowCircleUpIcon fontSize="small" color="warning" />;
+    default:
+      return <></>;
+  }
+}

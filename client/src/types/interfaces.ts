@@ -5,3 +5,8 @@ export interface Milestone {
   milestoneType: MilestoneType;
   milestoneRequiredLevel: number;
 }
+
+export interface Boost {
+  boostName: string;
+  boostLevel: number;
+}

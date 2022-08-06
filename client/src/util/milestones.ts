@@ -1,6 +1,6 @@
 import { Player } from "oldschooljs/dist/meta/types";
-import { MilestoneType } from "../types/enums";
-import { Milestone } from "../types/interfaces";
+import { MilestoneType, MilestoneUnlockType } from "../types/enums";
+import { Boost, Milestone } from "../types/interfaces";
 
 export function getAllMilestonesForType(
   milestoneType: MilestoneType
@@ -16,12 +16,20 @@ export function getAllMilestonesForType(
 export function doesPlayerHaveMilestoneUnlocked(
   milestone: Milestone,
   player: Player
-): boolean {
+): MilestoneUnlockType {
   switch (milestone.milestoneType) {
     case MilestoneType.CRAFTING:
-      return player.skills.crafting.level >= milestone.milestoneRequiredLevel;
+      if (player.skills.crafting.level >= milestone.milestoneRequiredLevel)
+        return MilestoneUnlockType.YES;
+      else if (
+        player.skills.crafting.level +
+          craftingBoosts.reduce((a, b) => a + b.boostLevel, 0) >=
+        milestone.milestoneRequiredLevel
+      )
+        return MilestoneUnlockType.WITH_BOOST;
+      else return MilestoneUnlockType.NO;
     default:
-      return false;
+      return MilestoneUnlockType.NO;
   }
 }
 
@@ -168,3 +176,17 @@ const CRAFTING_MILESTONES: Milestone[] = [
   zenyteAmulet,
   slayerRing,
 ];
+
+// Stew boost
+const spicyStew: Boost = {
+  boostName: "Spicy Stew",
+  boostLevel: 5,
+};
+
+// Crafting boosts
+const mushroomPie: Boost = {
+  boostName: "Mushroom Pie",
+  boostLevel: 4,
+};
+
+const craftingBoosts: Boost[] = [mushroomPie, spicyStew];

@@ -1,7 +1,6 @@
 import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { Player } from "oldschooljs/dist/meta/types";
 import React from "react";
-import { MilestoneType } from "../types/enums";
 import { Milestones } from "./Milestones";
 
 interface MilestonesContainerProps {
