@@ -1,5 +1,6 @@
 export enum MilestoneType {
   CRAFTING = 0,
+  HERBLORE = 1,
 }
 
 export enum MilestoneUnlockType {

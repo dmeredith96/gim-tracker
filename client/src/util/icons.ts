@@ -13,6 +13,8 @@ export function getIconForMilestone(milestone: Milestone) {
   switch (milestone.milestoneType) {
     case MilestoneType.CRAFTING:
       return getIconForCraftingMilestone(milestone);
+    case MilestoneType.HERBLORE:
+      return getIconForHerbloreMilestone(milestone);
     default:
       return "";
   }
@@ -20,6 +22,13 @@ export function getIconForMilestone(milestone: Milestone) {
 
 function getIconForCraftingMilestone(milestone: Milestone) {
   const image = require("./../../public/icons/crafting/" +
+    milestone.milestoneName.replace(/ /g, "_") +
+    ".png");
+  return image;
+}
+
+function getIconForHerbloreMilestone(milestone: Milestone) {
+  const image = require("./../../public/icons/herblore/" +
     milestone.milestoneName.replace(/ /g, "_") +
     ".png");
   return image;

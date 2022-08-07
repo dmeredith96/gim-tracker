@@ -1,6 +1,7 @@
 import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { Player } from "oldschooljs/dist/meta/types";
 import React from "react";
+import { MilestoneType } from "../types/enums";
 import { Milestones } from "./Milestones";
 
 interface MilestonesContainerProps {
@@ -10,7 +11,7 @@ interface MilestonesContainerProps {
 export const MilestonesContainer: React.FC<MilestonesContainerProps> = (
   props: MilestonesContainerProps
 ) => {
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = React.useState<MilestoneType>(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -28,6 +29,7 @@ export const MilestonesContainer: React.FC<MilestonesContainerProps> = (
             onChange={handleTabChange}
           >
             <Tab label="Crafting" />
+            <Tab label="Herblore" />
           </Tabs>
         </Box>
         <Milestones milestoneType={selectedTab} players={props.players} />

@@ -8,6 +8,8 @@ export function getAllMilestonesForType(
   switch (milestoneType) {
     case MilestoneType.CRAFTING:
       return CRAFTING_MILESTONES;
+    case MilestoneType.HERBLORE:
+      return HERBLORE_MILESTONES;
     default:
       return [];
   }
@@ -28,12 +30,22 @@ export function doesPlayerHaveMilestoneUnlocked(
       )
         return MilestoneUnlockType.WITH_BOOST;
       else return MilestoneUnlockType.NO;
+    case MilestoneType.HERBLORE:
+      if (player.skills.herblore.level >= milestone.milestoneRequiredLevel)
+        return MilestoneUnlockType.YES;
+      else if (
+        player.skills.herblore.level +
+          herbloreBoosts.reduce((a, b) => a + b.boostLevel, 0) >=
+        milestone.milestoneRequiredLevel
+      )
+        return MilestoneUnlockType.WITH_BOOST;
+      else return MilestoneUnlockType.NO;
     default:
       return MilestoneUnlockType.NO;
   }
 }
 
-// Crafting
+// Crafting milestones
 const greenDhideBody: Milestone = {
   milestoneName: "Green Dragonhide Body",
   milestoneType: MilestoneType.CRAFTING,
@@ -177,6 +189,94 @@ const CRAFTING_MILESTONES: Milestone[] = [
   slayerRing,
 ];
 
+// Herblore milestones
+const superRestores: Milestone = {
+  milestoneName: "Super Restore",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 63,
+};
+
+const superDefenses: Milestone = {
+  milestoneName: "Super Defense",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 66,
+};
+
+const antidotePlus: Milestone = {
+  milestoneName: "Antidote+",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 68,
+};
+
+const antifirePotion: Milestone = {
+  milestoneName: "Antifire Potion",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 69,
+};
+
+const rangingPotion: Milestone = {
+  milestoneName: "Ranging Potion",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 72,
+};
+
+const weaponPoisonPlus: Milestone = {
+  milestoneName: "Weapon Poison+",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 73,
+};
+
+const magicPotion: Milestone = {
+  milestoneName: "Magic Potion",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 76,
+};
+
+const staminaPotion: Milestone = {
+  milestoneName: "Stamina Potion",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 77,
+};
+
+const antidotePlusPlus: Milestone = {
+  milestoneName: "Antidote++",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 79,
+};
+
+const saradominBrew: Milestone = {
+  milestoneName: "Saradomin Brew",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 81,
+};
+
+const antivenom: Milestone = {
+  milestoneName: "Antivenom",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 87,
+};
+
+const antivenomPlus: Milestone = {
+  milestoneName: "Antivenom+",
+  milestoneType: MilestoneType.HERBLORE,
+  milestoneRequiredLevel: 94,
+};
+
+const HERBLORE_MILESTONES: Milestone[] = [
+  superRestores,
+  superDefenses,
+  antidotePlus,
+  antifirePotion,
+  rangingPotion,
+  weaponPoisonPlus,
+  magicPotion,
+  staminaPotion,
+  antidotePlusPlus,
+  saradominBrew,
+  antivenom,
+  antivenomPlus,
+];
+
 // Stew boost
 const spicyStew: Boost = {
   boostName: "Spicy Stew",
@@ -190,3 +290,16 @@ const mushroomPie: Boost = {
 };
 
 const craftingBoosts: Boost[] = [mushroomPie, spicyStew];
+
+// Herblore boosts
+const botanicalPie: Boost = {
+  boostName: "Botanical Pie",
+  boostLevel: 4,
+};
+
+const greenmansAle: Boost = {
+  boostName: "Greenman's Ale",
+  boostLevel: 1,
+};
+
+const herbloreBoosts: Boost[] = [spicyStew, botanicalPie, greenmansAle];
