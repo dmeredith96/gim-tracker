@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { Player } from "oldschooljs/dist/meta/types";
 import React from "react";
 import { getIconForMilestone } from "../util/icons";
@@ -56,7 +56,12 @@ export const MilestoneComponent: React.FC<MilestoneProps> = (
           {props.players.map((player) => {
             return (
               <Box>
-                {player.username} {getMilestoneIcon(props.milestone, player)}
+                {player.username}{" "}
+                <Tooltip
+                  title={getMilestoneIconTooltipTitle(props.milestone, player)}
+                >
+                  {getMilestoneIcon(props.milestone, player)}
+                </Tooltip>
               </Box>
             );
           })}
@@ -65,6 +70,19 @@ export const MilestoneComponent: React.FC<MilestoneProps> = (
     </Box>
   );
 };
+
+function getMilestoneIconTooltipTitle(milestone: Milestone, player: Player) {
+  switch (doesPlayerHaveMilestoneUnlocked(milestone, player)) {
+    case MilestoneUnlockType.NO:
+      return "This player does not have this unlocked.";
+    case MilestoneUnlockType.YES:
+      return "This player has this unlocked.";
+    case MilestoneUnlockType.WITH_BOOST:
+      return "This player can boost for this.";
+    default:
+      return "";
+  }
+}
 
 function getMilestoneIcon(milestone: Milestone, player: Player) {
   switch (doesPlayerHaveMilestoneUnlocked(milestone, player)) {
